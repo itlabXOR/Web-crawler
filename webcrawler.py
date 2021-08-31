@@ -46,10 +46,11 @@ def split_list(l, n):
         yield l[i:i + n]
 
 result = split_list(newscrawler(),n)
-result = result.transpose()
 
 
 
 with open('newstitle.csv', 'w+',newline='') as f:
     write = csv.writer(f)
     write.writerow(result)
+
+
