@@ -2,7 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import csv
 import pandas as pd
-import numpy
+import numpy as np
+import openpyxl
 
 time_data = []
 title_data = []
@@ -23,7 +24,7 @@ def newscrawler():
     #현재 크롤링한 뉴스 개수
 
     print(len(news))
-#데이터 가져와서 각 시간별 수치와 그래프 비교
+    #데이터 가져와서 각 시간별 수치와 그래프 비교
     result = []
     for article in news:
         #제목 a태그에 DY5T1d속성
@@ -38,19 +39,21 @@ def newscrawler():
         result.append(news_date)
         result.append(news_time)
         result.append(news_title)
+
+
     return result
+
+
 n=3
 def split_list(l, n):
     # 리스트 l의 길이가 n이면 계속 반복
     for i in range(0, len(l), n):
         yield l[i:i + n]
 
+
+
 result = split_list(newscrawler(),n)
 
 
-
-with open('newstitle.csv', 'w+',newline='') as f:
-    write = csv.writer(f)
-    write.writerow(result)
-
-
+df = pd.DataFrame.from_records(result)
+df.to_excel('test.xlsx',encoding='utf-8')
